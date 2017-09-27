@@ -1,0 +1,22 @@
+<%= form_with(model: config, local: true) do |form| %>
+  <% if config.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(config.errors.count, "error") %> prohibited this config from being saved:</h2>
+
+      <ul>
+      <% config.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :particle_access_token %>
+    <%= form.text_field :particle_access_token, id: :config_particle_access_token %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

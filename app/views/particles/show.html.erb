@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @particle.name %>
+</p>
+
+<p>
+  <strong>Particle:</strong>
+  <%= @particle.particle_id %>
+</p>
+
+<%= link_to 'Edit', edit_particle_path(@particle) %> |
+<%= link_to 'Back', particles_path %>

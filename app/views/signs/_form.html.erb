@@ -1,0 +1,32 @@
+<%= form_with(model: sign, local: true) do |form| %>
+  <% if sign.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(sign.errors.count, "error") %> prohibited this sign from being saved:</h2>
+
+      <ul>
+      <% sign.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :sign_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :particle_id %>
+    <%= form.text_field :particle_id, id: :sign_particle_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :relay %>
+    <%= form.number_field :relay, id: :sign_relay %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

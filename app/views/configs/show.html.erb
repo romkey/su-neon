@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Particle access token:</strong>
+  <%= @config.particle_access_token %>
+</p>
+
+<%= link_to 'Edit', edit_config_path(@config) %> |
+<%= link_to 'Back', configs_path %>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  particle: one
+  relay: 1
+
+two:
+  name: MyString
+  particle: two
+  relay: 1

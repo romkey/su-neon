@@ -1,0 +1,27 @@
+<%= form_with(model: particle, local: true) do |form| %>
+  <% if particle.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(particle.errors.count, "error") %> prohibited this particle from being saved:</h2>
+
+      <ul>
+      <% particle.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :particle_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :particle_id %>
+    <%= form.text_field :particle_id, id: :particle_particle_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
