@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170927005023) do
+ActiveRecord::Schema.define(version: 20170927020305) do
 
   create_table "configs", force: :cascade do |t|
     t.string "particle_access_token", null: false
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20170927005023) do
     t.index ["user_id"], name: "index_oauth_accounts_on_user_id"
   end
 
-  create_table "particles", force: :cascade do |t|
+  create_table "particle_instances", force: :cascade do |t|
     t.string "name", null: false
     t.string "particle_id", null: false
     t.datetime "created_at", null: false
@@ -47,12 +47,13 @@ ActiveRecord::Schema.define(version: 20170927005023) do
 
   create_table "signs", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "particle_id"
+    t.integer "particle_instance_id"
     t.integer "relay", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "picture"
     t.index ["name"], name: "index_signs_on_name"
-    t.index ["particle_id"], name: "index_signs_on_particle_id"
+    t.index [nil], name: "index_signs_on_particle_id"
   end
 
   create_table "users", force: :cascade do |t|

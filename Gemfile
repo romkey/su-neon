@@ -57,4 +57,8 @@ end
 gem 'bugsnag'
 gem 'cancancan'
 
+gem 'carrierwave'
+gem 'fog'
+gem "fog-aws"
+
 gem 'particlerb', '~> 1.4.0'
