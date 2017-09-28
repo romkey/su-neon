@@ -1,17 +1,20 @@
 <h1>Signs</h1>
-<div class="card-group">
+<div class="card-deck">
     <% @signs.each do |sign| %>
     <div class='card'>
+      <div class='card-block'>
       <h2 class='card-title'><%=sign.name %></h2>
-      <%= sign.picture %>
+      <%= image_tag(sign.picture_url, class: 'card-img-top') if sign.picture? %>
       <%= form_for(sign, class: 'form') do |f| %>
         <ul>
         <li><%= f.text_field :name %></li>
         <li><%= f.number_field :relay %></li>
-        <li><%= f.file_field :picture %></li>
-	<li><%= f.submit class: 'submit' %></li>
+        <li><%= f.file_field( :picture, value: 'Choose sign picture', accept: 'image/png,image/gif,image/jpeg') %></li>
+	<li><%= f.submit class: 'btn btn-primary btn-lg' %></li>
       <% end %>
+      </div>
       </div>
     <% end %>
 </div>
-<%= link_to 'Add a sign!', new_sign_path %>
+<br/>
+<%= link_to 'Add a sign!', new_sign_path, class: 'btn btn-primary btn-lg active' %>
