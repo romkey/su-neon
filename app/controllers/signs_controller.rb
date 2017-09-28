@@ -26,6 +26,8 @@ class SignsController < ApplicationController
   def create
     @sign = Sign.new(sign_params)
 
+    @sign.picture = sign_params[:picture]
+
     respond_to do |format|
       if @sign.save
         format.html { redirect_to @sign, notice: 'Sign was successfully created.' }
@@ -69,6 +71,6 @@ class SignsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sign_params
-      params.require(:sign).permit(:name, :particle_instance_id, :relay)
+      params.require(:sign).permit(:name, :particle_instance_id, :relay, :picture)
     end
 end

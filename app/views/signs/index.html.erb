@@ -1,16 +1,16 @@
 <h1>Signs</h1>
 <div class="card-deck">
     <% @signs.each do |sign| %>
+
     <div class='card'>
-      <div class='card-block'>
-      <h2 class='card-title'><%=sign.name %></h2>
-      <%= image_tag(sign.picture_url, class: 'card-img-top') if sign.picture? %>
-      <%= form_for(sign, class: 'form') do |f| %>
-        <ul>
-        <li><%= f.text_field :name %></li>
-        <li><%= f.number_field :relay %></li>
-        <li><%= f.file_field( :picture, value: 'Choose sign picture', accept: 'image/png,image/gif,image/jpeg') %></li>
-	<li><%= f.submit class: 'btn btn-primary btn-lg' %></li>
+    	<%= image_tag(sign.picture_url, class: 'card-img-top') if sign.picture? %>
+	<div class='card-block'>
+	<h2 class='card-title'><%=sign.name %></h2>
+	<%= form_for(sign, class: 'form') do |f| %>
+          <%= f.text_field :name %><br>
+          <%= f.number_field :relay %><br>
+          <%= f.file_field( :picture, value: 'Choose sign picture', accept: 'image/png,image/gif,image/jpeg') %><br>
+	  <%= f.submit class: 'btn btn-primary btn-lg' %>
       <% end %>
       </div>
       </div>
