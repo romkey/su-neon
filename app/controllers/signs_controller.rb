@@ -4,7 +4,7 @@ class SignsController < ApplicationController
   # GET /signs
   # GET /signs.json
   def index
-    @signs = Sign.all
+    @signs = Sign.order(name: :asc)
   end
 
   # GET /signs/1
