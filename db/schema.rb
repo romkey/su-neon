@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170927020305) do
+ActiveRecord::Schema.define(version: 20170930020708) do
 
   create_table "configs", force: :cascade do |t|
     t.string "particle_access_token", null: false
@@ -25,6 +25,24 @@ ActiveRecord::Schema.define(version: 20170927020305) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_keywords_on_name"
     t.index ["sign_id"], name: "index_keywords_on_sign_id"
+  end
+
+  create_table "news_hits", force: :cascade do |t|
+    t.integer "news_source_id", null: false
+    t.integer "keyword_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["keyword_id"], name: "index_news_hits_on_keyword_id"
+    t.index ["news_source_id"], name: "index_news_hits_on_news_source_id"
+  end
+
+  create_table "news_sources", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "feed_url", null: false
+    t.integer "lifetime_hits", default: 0, null: false
+    t.datetime "last_processed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "oauth_accounts", force: :cascade do |t|

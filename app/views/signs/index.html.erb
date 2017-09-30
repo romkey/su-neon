@@ -5,21 +5,9 @@
   <% @signs.each do |sign| %>
 
   <div class='w-25 p-3'>
-  <div class='card '>
-    <%= image_tag(sign.picture_url, class: 'card-img-top') if sign.picture? %>
-    <div class='card-block'>
-      <h2 class='card-title sign'><a><%=sign.name %></a></h2>
-      <% if false %>
-      <%= form_for(sign, class: 'form') do |f| %>
-      <%= f.text_field :name %><br>
-      <%= f.number_field :relay %><br>
-      <%= f.file_field( :picture, value: 'Choose sign picture', accept: 'image/png,image/gif,image/jpeg') %><br>
-      <%= f.submit class: 'btn btn-primary btn-lg' %>
-      <% end %>
-      <% end %>
-    </div>
+    <%= render partial: 'sign', object: sign%>
   </div>
-  </div>
+
   <% end %>
 </div>
 </div>

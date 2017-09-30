@@ -1,17 +1,3 @@
-<p>
-  <strong>Name:</strong>
-  <%= @sign.name %>
-</p>
-
-<p>
-  <strong>Particle:</strong>
-  <%= @sign.particle_instance %>
-</p>
-
-<p>
-  <strong>Relay:</strong>
-  <%= @sign.relay %>
-</p>
-
+<%= render partial: 'sign',object: sign %>
 <%= link_to 'Edit', edit_sign_path(@sign) %> |
 <%= link_to 'Back', signs_path %>

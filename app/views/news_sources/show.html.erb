@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @news_source.name %>
+</p>
+
+<p>
+  <strong>Feed url:</strong>
+  <%= @news_source.feed_url %>
+</p>
+
+<p>
+  <strong>Last processed at:</strong>
+  <%= @news_source.last_processed_at %>
+</p>
+
+<%= link_to 'Edit', edit_news_source_path(@news_source) %> |
+<%= link_to 'Back', news_sources_path %>

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>News source:</strong>
+  <%= @news_hit.news_source %>
+</p>
+
+<p>
+  <strong>Keyword:</strong>
+  <%= @news_hit.keyword %>
+</p>
+
+<%= link_to 'Edit', edit_news_hit_path(@news_hit) %> |
+<%= link_to 'Back', news_hits_path %>

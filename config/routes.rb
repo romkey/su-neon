@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :news_hits
+  resources :news_sources
   resources :configs
   resources :keywords
   resources :signs
