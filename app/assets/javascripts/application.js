@@ -11,8 +11,9 @@
 // about supported directives.
 //
 //= require jquery
+//= require popper
 //= require tether
-//= require bootstrap-sprockets
+//= requirex bootstrap-sprockets
 //= require bootstrap
 //= require datetimepicker
 //= require jquery_ujs
