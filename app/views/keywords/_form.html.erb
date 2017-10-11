@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= form.label 'Category' %>
-    <%= select :keyword, :sign_id, options_for_select(Sign.all.pluck(:name, :id)) %>
+    <%= select :keyword, :sign_id, options_for_select(Sign.all.order(name: :asc).pluck(:name, :id)) %>
   </div>
 
   <div class="actions">
