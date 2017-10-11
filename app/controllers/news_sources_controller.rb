@@ -4,7 +4,7 @@ class NewsSourcesController < ApplicationController
   # GET /news_sources
   # GET /news_sources.json
   def index
-    @news_sources = NewsSource.all
+    @news_sources = NewsSource.all.order(name: :asc)
   end
 
   # GET /news_sources/1
