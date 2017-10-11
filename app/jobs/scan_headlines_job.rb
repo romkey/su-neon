@@ -23,5 +23,7 @@ class ScanHeadlinesJob < ApplicationJob
         end
       end
     end
+
+    source.update_attributes(last_processed_at: Time.now)
   end
 end
