@@ -2,7 +2,7 @@
 
 <h1>News Sources</h1>
 
-<table>
+<table class='table'>
   <thead>
     <tr>
       <th>Name</th>
@@ -18,7 +18,6 @@
         <td><%= news_source.name %></td>
         <td><%= news_source.feed_url %></td>
         <td><%= news_source.last_processed_at %></td>
-        <td><%= link_to 'Show', news_source %></td>
         <td><%= link_to 'Edit', edit_news_source_path(news_source) %></td>
         <td><%= link_to 'Destroy', news_source, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

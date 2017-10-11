@@ -1,16 +1,22 @@
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 <% if false %>
   <a class="navbar-brand" href="#"><%= image_tag('branding.jpg') %> Parts Is Parts</a>
 <% end %>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
 	<%= link_to "Signs", signs_path, class: 'nav-link' %>
       </li>
+      <li class="nav-item active">
+	<%= link_to "Keywords", keywords_path, class: 'nav-link' %>
+      </li>
 <% if user_signed_in? %>
+      <li class="nav-item active">
+	<%= link_to "Headline Sources", news_sources_path, class: 'nav-link' %>
+      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <%= current_user.email %>

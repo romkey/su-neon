@@ -17,8 +17,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :sign_id %>
-    <%= form.text_field :sign_id, id: :keyword_sign_id %>
+    <%= form.label 'Category' %>
+    <%= select :keyword, :sign_id, options_for_select(Sign.all.pluck(:name, :id)) %>
   </div>
 
   <div class="actions">
