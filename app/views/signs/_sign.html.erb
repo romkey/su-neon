@@ -1,7 +1,7 @@
   <div class='card '>
     <%= image_tag(sign.picture_url, class: 'card-img-top') if sign.picture? %>
     <div class='card-block'>
-      <h2 class='card-title sign'><a><%=sign.name %></a></h2>
+      <h2 class='card-title sign<%= " lit" if sign.lit %>'><a><%=sign.name %></a></h2>
       <% if false %>
       <%= form_for(sign, class: 'form') do |f| %>
       <%= f.text_field :name %><br>

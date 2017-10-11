@@ -9,16 +9,19 @@ class Sign < ApplicationRecord
 
   def turn_on
     set_relay
+    update_attributes(lit: true)
   end
-  def turn_off
 
+  def turn_off
+    set_relay
+    update_attributes(lit: false)
   end
 
   private
   def set_relay
-    Particle.access_token = Config.first.particle_access_token
+#    Particle.access_token = Config.first.particle_access_token
 
-    device = Particle.device(particle_instance.particle_id)
+ #   device = Particle.device(particle_instance.particle_id)
     # we want to set r1, r2, r3 or r4 to LOW for off and HIGH for on
     # https://docs.particle.io/datasheets/particle-shields/#relay-shield-sample-code
 #    device.function('digitalWrite', )

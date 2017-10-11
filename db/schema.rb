@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171010205010) do
+ActiveRecord::Schema.define(version: 20171011041515) do
 
   create_table "configs", force: :cascade do |t|
     t.string "particle_access_token", null: false
@@ -78,6 +78,15 @@ ActiveRecord::Schema.define(version: 20171010205010) do
     t.index ["name"], name: "index_particles_on_name"
   end
 
+  create_table "recent_headlines", force: :cascade do |t|
+    t.string "headline", null: false
+    t.integer "news_source_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "link", default: "", null: false
+    t.index ["news_source_id"], name: "index_recent_headlines_on_news_source_id"
+  end
+
   create_table "signs", force: :cascade do |t|
     t.string "name", null: false
     t.integer "particle_instance_id"
@@ -85,6 +94,7 @@ ActiveRecord::Schema.define(version: 20171010205010) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "picture"
+    t.boolean "lit", default: false, null: false
     t.index ["name"], name: "index_signs_on_name"
     t.index [nil], name: "index_signs_on_particle_id"
   end

@@ -1,15 +1,27 @@
 <h1>Signs</h1>
 <div class="card-deck">
-
-<div class='row'>
-  <% @signs.each do |sign| %>
-
-  <div class='w-25 p-3'>
-    <%= render partial: 'sign', object: sign%>
-  </div>
-
+  <div class='row'>
+    <% @signs.each do |sign| %>
+    <div class='w-25 p-3'>
+      <%= render partial: 'sign', object: sign %>
+    </div>
   <% end %>
+  </div>
 </div>
-</div>
+
+<br />
+<br />
+<br />
+<h2>Recent Headlines</h2>
+<table class='table'>
+<% @recent_headlines.each do |headline| %>
+  <tr>
+    <td><%= headline.news_source.name %></td>
+    <td><%= link_to headline.headline, headline.link %></td>
+  </tr>
+<% end %>
+</table>
 <br/>
-<%= link_to 'Add a sign!', new_sign_path, class: 'btn btn-primary btn-lg active' %>
+<% if user_signed_in? %>
+  <%= link_to 'Add a sign!', new_sign_path, class: 'btn btn-primary btn-lg active' %>
+<% end %>
