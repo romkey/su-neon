@@ -11,11 +11,11 @@ class ScanHeadlinesJob < ApplicationJob
     parser = RSS::Parser.new feed_file
     feed = parser.parse
     feed.items.each do |item|
-      pp item
-
-      RecentHeadline.create headline: item.title,
-                            link: item.link,
-                            news_source: source
+      unless RecentHeadline.find_by link: item.link
+        RecentHeadline.create headline: item.title,
+                              link: item.link,
+                              news_source: source
+      end
 
       Keyword.find_each do |keyword|
         if item.title.downcase.match keyword.name

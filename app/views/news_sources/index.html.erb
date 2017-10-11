@@ -19,7 +19,7 @@
         <td><%= news_source.feed_url %></td>
         <td><%= news_source.last_processed_at %></td>
         <td><%= link_to 'Edit', edit_news_source_path(news_source) %></td>
-        <td><%= link_to 'Destroy', news_source, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Remove', news_source, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -27,4 +27,5 @@
 
 <br>
 
-<%= link_to 'New News Source', new_news_source_path %>
+<%= link_to' Add News Source', new_news_source_path, class: 'button btn-primary', html: { role: "button" } %>
+

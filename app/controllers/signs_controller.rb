@@ -6,7 +6,7 @@ class SignsController < ApplicationController
   # GET /signs.json
   def index
     @signs = Sign.order(name: :asc)
-    @recent_headlines = RecentHeadline.order(created_at: :desc).limit(20)
+    @recent_headlines = RecentHeadline.order(created_at: :desc).limit(100)
   end
 
   # GET /signs/1
