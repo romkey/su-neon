@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to 'signs#index'
+  root to: 'signs#index'
 
   resources :news_hits
   resources :news_sources
