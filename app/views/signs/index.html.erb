@@ -16,6 +16,7 @@
 <table class='table'>
 <% @recent_headlines.each do |headline| %>
   <tr>
+    <td><%= time_ago_in_words(headline.created_at) %></td>
     <td><%= headline.news_source.name %></td>
     <td><%= link_to headline.headline, headline.link %></td>
   </tr>
