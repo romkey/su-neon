@@ -6,7 +6,7 @@ class ParticleInstance < ApplicationRecord
   # curl https://api.particle.io/v1/devices/0123456789abcdef/relay -d access_token=123412341234 -d params=r1,HIGH
   def set_relay(relay, state)
     uri = URI.parse "https://api.particle.io/v1/devices/#{particle_id}/relay"
-    header = { access_token: Config.first.access_token }
+    header = { access_token: Config.first.particle_access_token }
     http = Net::HTTP.new(uri.host, uri.port)
 
     request = Net::HTTP::Post.new(uri.request_uri, header)
