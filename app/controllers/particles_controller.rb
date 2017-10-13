@@ -70,7 +70,16 @@ class ParticlesController < ApplicationController
     pp result
     puts '>>> token'
     pp result.token
+    Particle.access_token = result.token
+    puts '>>> devices'
+    pp Particle.devices
+    
     Config.first.update_attributes(particle_access_token: result.token)
+
+    Particle.devices.each do |device|
+      device = ParticleInstance.where(particle_id: device.id).first_or_create(name: device.name)
+    end
+
     redirect_to '/configs'
   end
 
