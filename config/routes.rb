@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :keywords
   resources :signs
   resources :particles
+  post '/particles/login', to: 'particles#login'
   devise_for :users
 
   mount RailsAdmin::Engine => '/rails_admin', as: 'rails_admin'

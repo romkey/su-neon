@@ -61,6 +61,19 @@ class ParticlesController < ApplicationController
     end
   end
 
+  def login
+    require 'pp'
+    pp params
+
+    client = Particle::Client.new
+    result = client.create_token(params[:email], params[:password], { expires_in: 0 })
+    pp result
+    puts '>>> token'
+    pp result.token
+    Config.first.update_attributes(particle_access_token: result.token)
+    redirect_to '/configs'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_particle

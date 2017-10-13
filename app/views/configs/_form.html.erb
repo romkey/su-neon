@@ -16,7 +16,27 @@
     <%= form.text_field :particle_access_token, id: :config_particle_access_token %>
   </div>
 
+  <div class="field">
+    <%= form.label :threshold %>
+    <%= form.text_field :threshold, id: :threshold %>
+  </div>
+
+
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
+
+  <div>
+    <h2>Generate new Particle API token</h2>
+    <p>
+      Login to Particle to generate a new API token. We store the token but throw away your login information immediately after getting the token - we do not record or store your login information.
+    </p>
+  </div>
+  <%= form_tag("/particles/login", method: 'post') do |form| %>
+    <label>Email</label>
+    <input type='email' name='email'>
+    <label>Particle password</label>
+    <input type='password' name='password'>
+    <input type='submit'>
+  <% end %>
