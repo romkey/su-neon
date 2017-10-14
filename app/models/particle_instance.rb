@@ -9,7 +9,7 @@ class ParticleInstance < ApplicationRecord
 
     header = { Authorization: "Bearer #{Config.first.particle_access_token }" }
 
-    http = Net::HTTP.new(uri.request_uri, header)
+    http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
 
     request = Net::HTTP::Post.new(uri.request_uri, header)
