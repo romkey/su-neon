@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Name:</strong>
   <%= @news_source.name %>
@@ -17,3 +15,4 @@
 
 <%= link_to 'Edit', edit_news_source_path(@news_source) %> |
 <%= link_to 'Back', news_sources_path %>
+<%= link_to 'Add Another Feed', new_news_source_path %>
