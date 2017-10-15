@@ -66,3 +66,6 @@ gem 'delayed_job_active_record'
 
 gem 'stopwords-filter', require: 'stopwords'
 gem 'stemmify'
+
+gem 'slack-ruby-bot'
+gem 'celluloid-io'

@@ -66,6 +66,27 @@ GEM
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
+    celluloid (0.17.3)
+      celluloid-essentials
+      celluloid-extras
+      celluloid-fsm
+      celluloid-pool
+      celluloid-supervision
+      timers (>= 4.1.1)
+    celluloid-essentials (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-extras (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-fsm (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-io (0.17.3)
+      celluloid (>= 0.17.2)
+      nio4r (>= 1.1)
+      timers (>= 4.1.1)
+    celluloid-pool (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-supervision (0.20.6)
+      timers (>= 4.1.1)
     childprocess (0.8.0)
       ffi (~> 1.0, >= 1.0.11)
     coffee-rails (4.2.2)
@@ -250,12 +271,14 @@ GEM
     font-awesome-rails (4.7.0.2)
       railties (>= 3.2, < 5.2)
     formatador (0.2.5)
+    gli (2.16.1)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     haml (5.0.3)
       temple (>= 0.8.0)
       tilt
     hashie (3.5.6)
+    hitimes (1.2.6)
     i18n (0.8.6)
     inflecto (0.0.2)
     ipaddress (0.8.3)
@@ -421,6 +444,17 @@ GEM
     selenium-webdriver (3.6.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
+    slack-ruby-bot (0.10.4)
+      hashie
+      slack-ruby-client (>= 0.6.0)
+    slack-ruby-client (0.10.0)
+      activesupport
+      faraday (>= 0.9)
+      faraday_middleware
+      gli
+      hashie
+      json
+      websocket-driver
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -443,6 +477,8 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    timers (4.1.2)
+      hitimes
     trollop (2.1.2)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
@@ -478,6 +514,7 @@ DEPENDENCIES
   cancancan
   capybara (~> 2.13)
   carrierwave
+  celluloid-io
   delayed_job_active_record
   devise
   dotenv-rails
@@ -501,6 +538,7 @@ DEPENDENCIES
   rails_admin (~> 1.2.0)
   sass-rails (~> 5.0)
   selenium-webdriver
+  slack-ruby-bot
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3
