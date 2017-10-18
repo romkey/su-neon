@@ -7,27 +7,33 @@ class ScanHeadlinesJob < ApplicationJob
 
   def perform
     state = {}
-    Sign.each do |sign|
+    Sign.all.each do |sign|
       state[sign.name] = { hits: 0,
-                           keyword_count: sign.keywords.count,
+                           keyword_count: Keyword.where(sign: sign).count,
+                           score: 0.0,
                            sign: sign
                          }
     end
 
     NewsSource.all.each do |ns|
-      self.scan.perform_now(ns, state)
+      ScanHeadlinesJob.scan(ns, state)
     end
 
     threshold = Config.first.threshold
 
-    max_keywords = state.pluck(:keyword_count).max
+    max_keywords = state.map { |key, st| st[:keyword_count] }.max
     max_keywords *= 1.0
 
     state.each do |key, st|
-      st[:score] = max_keywords/st[:keyword_count] * st[:hits]
+      puts "#{st[:sign].name} #{st[:score]}"
+      puts "mk #{max_keywords} kwc #{st[:keyword_count]}  hits #{st[:hits]}"
+      if st[:keyword_count] > 0
+        st[:score] = max_keywords/st[:keyword_count] * st[:hits]
+      end
+      puts "#{st[:sign].name} #{st[:score]}"
     end
 
-    max_score = state.pluck(:score).max
+    max_score = state.map { |key, st| puts "#{st[:sign].name} #{st[:score]}" ; st[:score] }.max
     state.each do |key, st|
       st[:score] /= 1.0*max_score
       if st[:score] >= threshold
@@ -35,10 +41,11 @@ class ScanHeadlinesJob < ApplicationJob
       else
         st[:sign].turn_off
       end
+      puts ">>> #{key} keywords #{st[:keyword_count]} hits #{st[:hits]} score #{st[:score]}"
     end
   end
 
-  def self.scan(source)
+  def self.scan(source, state)
     begin
       feed_file = open source.feed_url
 

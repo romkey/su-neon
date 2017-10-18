@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
   def refresh_now
-    NewsSource.all.each do |ns| ScanHeadlinesJob.perform_now(ns); end
+    ScanHeadlinesJob.perform_now
     redirect_to '/'
   end
 
