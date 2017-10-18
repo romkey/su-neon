@@ -25,8 +25,7 @@ class ScanHeadlinesJob < ApplicationJob
     max_keywords *= 1.0
 
     state.each do |key, st|
-      puts "#{st[:sign].name} #{st[:score]}"
-      puts "mk #{max_keywords} kwc #{st[:keyword_count]}  hits #{st[:hits]}"
+      puts "#{st[:sign].name} score #{st[:score]} max keywords #{max_keywords} keyword count #{st[:keyword_count]}  hits #{st[:hits]}"
       if st[:keyword_count] > 0
         st[:score] = max_keywords/st[:keyword_count] * st[:hits]
       end
@@ -61,8 +60,9 @@ class ScanHeadlinesJob < ApplicationJob
         end
 
         Keyword.find_each do |keyword|
-          if item.title.downcase.match keyword.name
-            state[keyword.sign.name].hits += 1
+          if item.title.downcase.match keyword.name.downcase
+            puts "hit '#{keyword.name}' in '#{item.title}'"
+            state[keyword.sign.name][:hits] += 1
           end
         end
       end
