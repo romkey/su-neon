@@ -1,7 +1,11 @@
+require 'pp'
+
 class AdminController < ApplicationController
   def refresh_now
     ScanHeadlinesJob.perform_now
     redirect_to '/'
+
+    pp state
   end
 
   def all_on

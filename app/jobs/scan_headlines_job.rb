@@ -43,6 +43,8 @@ class ScanHeadlinesJob < ApplicationJob
       end
       puts ">>> #{key} keywords #{st[:keyword_count]} hits #{st[:hits]} score #{st[:score]}"
     end
+
+    state
   end
 
   def self.scan(source, state)
