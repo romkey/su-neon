@@ -36,8 +36,10 @@ class ScanHeadlinesJob < ApplicationJob
     state.each do |key, st|
       st[:score] /= 1.0*max_score
       if st[:score] >= threshold
+        puts "ON >>> #{st[:sign].name}"
         st[:sign].turn_on
       else
+        puts "0FF >>> #{st[:sign].name}"
         st[:sign].turn_off
       end
       puts ">>> #{key} keywords #{st[:keyword_count]} hits #{st[:hits]} score #{st[:score]}"
