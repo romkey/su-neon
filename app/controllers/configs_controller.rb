@@ -69,6 +69,6 @@ class ConfigsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def config_params
-      params.require(:config).permit(:particle_access_token)
+      params.require(:config).permit(:particle_access_token, :threshold)
     end
 end
