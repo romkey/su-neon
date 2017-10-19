@@ -19,7 +19,7 @@ class ScanHeadlinesJob < ApplicationJob
       ScanHeadlinesJob.scan(ns, state)
     end
 
-    threshold = Config.first.threshold
+    threshold = Config.first.threshold / 100.0
 
     max_keywords = state.map { |key, st| st[:keyword_count] }.max
     max_keywords *= 1.0
@@ -55,14 +55,17 @@ class ScanHeadlinesJob < ApplicationJob
       parser = RSS::Parser.new feed_file
       feed = parser.parse
       feed.items.each do |item|
-        unless RecentHeadline.find_by link: item.link
-          RecentHeadline.create headline: item.title,
-                                link: item.link,
-                                news_source: source
+        rh = RecentHeadline.find_by link: item.link
+        unless rh
+          rh = RecentHeadline.create headline: item.title,
+                                     link: item.link,
+                                     news_source: source
         end
 
         Keyword.find_each do |keyword|
-          if item.title.downcase.match keyword.name.downcase
+          title = rh.normalized.downcase.gsub /'"@,\.\?/, ''
+
+          if title.split(' ').include?(keyword.normalized)
             puts "hit '#{keyword.name}' in '#{item.title}'"
             state[keyword.sign.name][:hits] += 1
           end
