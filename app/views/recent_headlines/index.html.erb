@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Recent Headlines</h1>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @recent_headlines.each do |recent_headline| %>
+      <tr>
+        <td><%= link_to 'Show', recent_headline %></td>
+        <td><%= link_to 'Edit', edit_recent_headline_path(recent_headline) %></td>
+        <td><%= link_to 'Destroy', recent_headline, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if user_signed_in? %>
+
+<% end %>

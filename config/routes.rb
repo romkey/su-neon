@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :recent_headlines
   root to: 'signs#index'
 
   resources :news_hits

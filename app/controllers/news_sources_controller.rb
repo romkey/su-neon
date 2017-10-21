@@ -5,6 +5,11 @@ class NewsSourcesController < ApplicationController
   # GET /news_sources.json
   def index
     @news_sources = NewsSource.all.order(name: :asc)
+
+    respond_to do |format|
+      format.html
+      format.json { send_data @news_sources.to_json, filename: "news_sources.json" }
+    end
   end
 
   # GET /news_sources/1
