@@ -8,6 +8,11 @@ class SignsController < ApplicationController
     @signs = Sign.order(name: :asc)
     #    @recent_headlines = RecentHeadline.order(created_at: :desc).limit(500)
     @recent_headlines = RecentHeadline.order(created_at: :desc).limit(10)
+
+    respond_to do |format|
+      format.html
+      format.json { send_data @signs.to_json, filename: "signs.json" }
+    end
   end
 
   # GET /signs/1

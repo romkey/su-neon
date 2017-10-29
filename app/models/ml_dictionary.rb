@@ -1,0 +1,2 @@
+class MlDictionary < ApplicationRecord
+end

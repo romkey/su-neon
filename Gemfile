@@ -66,4 +66,5 @@ gem 'delayed_job_active_record'
 
 gem 'stopwords-filter', require: 'stopwords'
 gem 'stemmify'
-#gem 'ruby-fann'
+gem 'ruby-fann'
+gem 'sparse_array'

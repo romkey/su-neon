@@ -405,6 +405,7 @@ GEM
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
+    ruby-fann (1.2.6)
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
     sass (3.5.1)
@@ -421,6 +422,7 @@ GEM
     selenium-webdriver (3.6.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
+    sparse_array (0.0.6)
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -499,8 +501,10 @@ DEPENDENCIES
   rails-assets-datetimepicker!
   rails-assets-tether (>= 1.4.0)!
   rails_admin (~> 1.2.0)
+  ruby-fann
   sass-rails (~> 5.0)
   selenium-webdriver
+  sparse_array
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3

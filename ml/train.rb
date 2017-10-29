@@ -1,5 +1,5 @@
 require 'ruby-fann'
-require 'sparse-array'
+require 'sparse_array'
 
 #
 # 1. split headline into words
@@ -10,17 +10,14 @@ require 'sparse-array'
 # 6. create sparse vector of word IDs
 # 7. create neural network with 100,000 neurons
 # 8. train with vectors of word IDs
-#
 
-
-
-def LearnHeadlines < RubyFann::Standard
-  def train_sign(sign)
+class LearnHeadlines < RubyFann::Standard
+  def self.train_sign(sign)
     filter = Stopwords::Snowball::Filter.new "en"
     keywords = normalize_words! sign.keywords
 
     headlines.each do |headline|
-      words = headline.normalize.downcase.gsub(/^[a-z]/, '').split(' ')
+      words = headline.normalized
     end
 
     vector = DefaultedSparseArray.new(0)
@@ -28,14 +25,28 @@ def LearnHeadlines < RubyFann::Standard
       id = MlDictionary.where(word: word).first_or_create.id
       vector[id] = 1
     end
-    
+
+    LearnHeadlines.train(vector)
+  end
+
+  def self.seed_dictionary
+    filter = Stopwords::Snowball::Filter.new "en"
+
+    RecentHeadline.all.each do |headline|
+      words = headline.normalized
+      words.each do |word|
+        MlDictionary.where(word: word).first_or_create
+      end
+    end
   end
 
   private
 
-  def train(data, desired_outputs)
-    train = RubyFann::TrainData.new(:inputs=>[[0.3, 0.4, 0.5], [0.1, 0.2, 0.3]], :desired_outputs=>[[0.7], [0.8]])
-    fann = RubyFann::Standard.new(:num_inputs=>3, :hidden_neurons=>[2, 8, 4, 3, 4], :num_outputs=>1)
+  def train(data)
+    train = RubyFann::TrainData.new(inputs : [ data ], :desired_outputs=>[[1]])
+
+    fann = RubyFann::Standard.new(:num_inputs=>50000, :hidden_neurons=>[2, 8, 4, 3, 4], :num_outputs=>1)
+
     fann.train_on_data(train, 1000, 10, 0.1) # 1000 max_epochs, 10 errors between reports and 0.1 desired MSE (mean-squared-error)
     outputs = fann.run([0.3, 0.2, 0.4])    
   end

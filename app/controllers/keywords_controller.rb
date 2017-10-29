@@ -5,6 +5,11 @@ class KeywordsController < ApplicationController
   # GET /keywords.json
   def index
     @keywords = Keyword.all.order(name: :asc)
+
+    respond_to do |format|
+      format.html
+      format.json { send_data @keywords.to_json, filename: "keywords.json" }
+    end
   end
 
   # GET /keywords/1
