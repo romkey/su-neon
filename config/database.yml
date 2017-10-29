@@ -25,4 +25,10 @@ test:
 
 production:
   <<: *default
-    
+
+headlines:
+  <<: *default
+  database: suneon_headlines
+  host: <%= ENV['DB_HOSTNAME'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
