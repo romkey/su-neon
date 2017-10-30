@@ -43,9 +43,9 @@ class LearnHeadlines < RubyFann::Standard
   private
 
   def train(data)
-    train = RubyFann::TrainData.new(inputs : [ data ], :desired_outputs=>[[1]])
+    train = RubyFann::TrainData.new(inputs: [ data ], desired_output: [[1]] )
 
-    fann = RubyFann::Standard.new(:num_inputs=>50000, :hidden_neurons=>[2, 8, 4, 3, 4], :num_outputs=>1)
+    fann = RubyFann::Standard.new(num_inputs: 50000, hidden_neurons: [2, 8, 4, 3, 4], num_outputs: 1)
 
     fann.train_on_data(train, 1000, 10, 0.1) # 1000 max_epochs, 10 errors between reports and 0.1 desired MSE (mean-squared-error)
     outputs = fann.run([0.3, 0.2, 0.4])    
