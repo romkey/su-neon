@@ -57,9 +57,9 @@ class ScanHeadlinesJob < ApplicationJob
       feed.items.each do |item|
         rh = RecentHeadline.find_by link: item.link
         unless rh
-          rh = RecentHeadline.create headline: item.title,
-                                     link: item.link,
-                                     news_source: source
+          rh = RecentHeadline.create  headline: item.title,
+                                   link: item.link,
+                                   news_source: source
         end
 
         Keyword.find_each do |keyword|

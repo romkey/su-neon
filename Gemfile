@@ -69,3 +69,5 @@ gem 'stopwords-filter', require: 'stopwords'
 gem 'stemmify'
 gem 'ruby-fann'
 gem 'sparse_array'
+
+gem 'pycall'
