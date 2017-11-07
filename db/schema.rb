@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171021165601) do
+ActiveRecord::Schema.define(version: 20171103044419) do
 
   create_table "configs", force: :cascade do |t|
     t.string "particle_access_token", null: false
@@ -43,8 +43,17 @@ ActiveRecord::Schema.define(version: 20171021165601) do
     t.index ["sign_id"], name: "index_keywords_on_sign_id"
   end
 
+  create_table "keywords_signs", id: false, force: :cascade do |t|
+    t.integer "keyword_id"
+    t.integer "sign_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["keyword_id"], name: "index_keywords_signs_on_keyword_id"
+    t.index ["sign_id"], name: "index_keywords_signs_on_sign_id"
+  end
+
   create_table "ml_dictionaries", force: :cascade do |t|
-    t.string "word", null: false, unique: true
+    t.string "word", null: false
     t.index ["word"], name: "index_ml_dictionaries_on_word"
   end
 
@@ -101,6 +110,7 @@ ActiveRecord::Schema.define(version: 20171021165601) do
     t.datetime "updated_at", null: false
     t.string "picture"
     t.boolean "lit", default: false, null: false
+    t.integer "order", default: 0, null: false
     t.index ["name"], name: "index_signs_on_name"
   end
 

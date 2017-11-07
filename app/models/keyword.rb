@@ -1,5 +1,7 @@
 class Keyword < ApplicationRecord
-  belongs_to :sign
+  has_and_belongs_to_many :signs
+
+#  belongs_to :sign
 
   def normalized
     name.stem

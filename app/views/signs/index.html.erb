@@ -1,5 +1,4 @@
-<h1>Signs</h1>
-<div class="card-deck">
+<div class='col-6'>
   <div class='row'>
     <% @signs.each do |sign| %>
     <div class='w-25 p-3'>
@@ -9,24 +8,18 @@
   </div>
 </div>
 
-<br />
-<br />
-<button><a href='/admin/all_off'>All Off</a></button>
-<button><a href='/admin/all_on'>All On</a></button>
-<button><a href='/admin/refresh_now'>Refresh Now</a></button>
-<br />
-<h2>Recent Headlines</h2>
+
+<div class='col-6'>
+  <form>
+    <input name='keyword' type='text'>
+  </form>
+
 <table class='table'>
 <% @recent_headlines.each do |headline| %>
   <tr>
-    <td><%= time_ago_in_words(headline.created_at) %></td>
     <td><%= headline.news_source.name %></td>
     <td><%= link_to headline.headline, headline.link %></td>
-    <td><%= headline.normalized %></td>
   </tr>
 <% end %>
 </table>
-<br/>
-<% if user_signed_in? %>
-  <%= link_to 'Add a sign!', new_sign_path, class: 'btn btn-primary btn-lg active' %>
-<% end %>
+</div>
