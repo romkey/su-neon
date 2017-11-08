@@ -1,5 +1,8 @@
+require 'pp'
+
 class KeywordsController < ApplicationController
   before_action :set_keyword, only: [:show, :edit, :update, :destroy]
+  skip_before_action :authenticate_user!, only: [:create]
 
   # GET /keywords
   # GET /keywords.json
@@ -29,6 +32,9 @@ class KeywordsController < ApplicationController
   # POST /keywords
   # POST /keywords.json
   def create
+    puts 'CCCREATE'
+    pp keyword_params
+
     @keyword = Keyword.new(keyword_params)
 
     respond_to do |format|
@@ -74,6 +80,6 @@ class KeywordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def keyword_params
-      params.require(:keyword).permit(:name, :sign_id)
+      params.require(:keyword).permit(:name, sign_ids: []) 
     end
 end

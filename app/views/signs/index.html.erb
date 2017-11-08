@@ -11,21 +11,21 @@
 
 
 <div class='col-6'>
-  <form>
+  <%= form_tag action: 'create', controller: 'keywords', method: 'post' do %>
     <label for='keyword''><b>Enter keyword and select corresponding signs</b></label>
-    <input name='keyword' id='keyword' type='text' class='form-control'>
-<div class='form-row'>
-<% Sign.all.each do |s| %>
-  <div class='form-check w-25'>
-    <label class='form-check-label'>
-      <input type='checkbox' class='form-check-input'>
-      <%= s.name %>
-      </label>
-  </div>
+    <input name='keyword[name]' id='keyword[name]' type='text' class='form-control'>
+    <%= hidden_field_tag("keyword[sign_ids][]", nil) %>
+    <div class='form-row'>
+      <% Sign.order(:name).each do |sign| %>
+        <div class='form-check w-25'>
+	  <label class='form-check-label'>
+	    <%= check_box_tag "keyword[sign_ids][]", sign.id, false, class: 'form-control' %><%= sign.name %>
+	  </label>
+	</div>
+	<% end %>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
   <% end %>
-</div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
 
 <table class='table'>
 <% @recent_headlines.each do |headline| %>
