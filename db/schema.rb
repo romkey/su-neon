@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171103044419) do
+ActiveRecord::Schema.define(version: 20171108043434) do
 
   create_table "configs", force: :cascade do |t|
     t.string "particle_access_token", null: false
@@ -36,11 +36,9 @@ ActiveRecord::Schema.define(version: 20171103044419) do
 
   create_table "keywords", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "sign_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_keywords_on_name"
-    t.index ["sign_id"], name: "index_keywords_on_sign_id"
   end
 
   create_table "keywords_signs", id: false, force: :cascade do |t|

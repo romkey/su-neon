@@ -8,8 +8,13 @@ class ScanHeadlinesJob < ApplicationJob
   def perform
     state = {}
     Sign.all.each do |sign|
+      keyword_count = 0
+      Keyword.all.each do |keyword|
+        keyword_count += 1 if keyword.signs.exists?(sign.id)
+      end
+
       state[sign.name] = { hits: 0,
-                           keyword_count: Keyword.where(sign: sign).count,
+                           keyword_count: keyword_count,
                            score: 0.0,
                            sign: sign
                          }
