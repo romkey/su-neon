@@ -1,14 +1,14 @@
-<p id="notice"><%= notice %></p>
-
+<div class='card w-25'>
+  <div class='card-block'>
+    <h2 class='card-title'><%= @keyword.name %></h2>
 <p>
-  <strong>Name:</strong>
-  <%= @keyword.name %>
+  <strong>Signs:</strong>
+  <% @keyword.signs.each do |sign| %>
+    <%= link_to sign.name, sign %>
+  <% end %>
 </p>
-
-<p>
-  <strong>Sign:</strong>
-  <%= @keyword.sign.name %>
-</p>
+  </div>
+  </div>
 
 <%= link_to 'Edit', edit_keyword_path(@keyword) %> |
 <%= link_to 'Back', keywords_path %>

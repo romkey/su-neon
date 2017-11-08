@@ -2,7 +2,7 @@ require 'pp'
 
 class KeywordsController < ApplicationController
   before_action :set_keyword, only: [:show, :edit, :update, :destroy]
-  skip_before_action :authenticate_user!, only: [:create]
+  skip_before_action :authenticate_user!
 
   # GET /keywords
   # GET /keywords.json
@@ -59,6 +59,13 @@ class KeywordsController < ApplicationController
         format.html { render :edit }
         format.json { render json: @keyword.errors, status: :unprocessable_entity }
       end
+    end
+
+    puts '*********'
+    pp request.referer, URI(request.referer).path
+
+    if URI(request.referer).path == '/'
+      redirect_to '/'
     end
   end
 

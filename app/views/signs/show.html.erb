@@ -1,3 +1,11 @@
-<%= render partial: 'sign',object: sign %>
+  <div class='card  w-25'>
+    <div class='card-block'>
+      <h2 class='card-title sign<%= " lit" if @sign.lit %>'><a><%=@sign.name %></a></h2>
+      <% @sign.keywords do |keyword| %>
+        <%= keyword.name %>
+      <% end %>
+    </div>
+  </div>
+
 <%= link_to 'Edit', edit_sign_path(@sign) %> |
 <%= link_to 'Back', signs_path %>

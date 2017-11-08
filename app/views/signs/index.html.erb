@@ -3,9 +3,13 @@
   <div class='row'>
     <% @signs.each do |sign| %>
     <div class='w-25 p-3'>
-      <%= render partial: 'sign', object: sign %>
+      <div class='card card-sign'>
+	<div class='card-block'>
+	  <h2 class='card-title sign <%= " lit" if sign.lit %>'><%= link_to sign.name, sign %></h2>
+	</div>
+      </div>
     </div>
-  <% end %>
+    <% end %>
   </div>
 </div>
 
