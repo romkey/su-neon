@@ -12,7 +12,6 @@ require 'sparse_array'
 # 8. train with vectors of word IDs
 
 class LearnHeadlines < RubyFann::Standard
-
   def self.test
     lh = LearnHeadlines.new Sign.find(2)
 
@@ -52,6 +51,9 @@ class LearnHeadlines < RubyFann::Standard
     
   end
 
+  # with stemming we'll probably never need more than 20,000 words in our vocabulary
+  # training input is a vector of 20,000 with a 1 for each word that appears
+  # we have 12 outputs, one for each sign - 1 means the sign is on, 0 off
   def train
     train_data = headlines_to_arrays(@training_headlines)
 

@@ -71,3 +71,4 @@ gem 'ruby-fann'
 gem 'sparse_array'
 
 gem 'pycall'
+gem 'whenever'
