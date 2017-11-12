@@ -58,17 +58,11 @@ end
 gem 'bugsnag'
 gem 'cancancan'
 
-gem 'carrierwave'
-gem 'fog'
-gem "fog-aws"
-
 gem 'particlerb', '~> 1.4.0'
 gem 'delayed_job_active_record'
 
 gem 'stopwords-filter', require: 'stopwords'
 gem 'stemmify'
 gem 'ruby-fann'
-gem 'sparse_array'
 
-gem 'pycall'
 gem 'whenever'

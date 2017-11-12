@@ -1,5 +1,4 @@
 require 'ruby-fann'
-require 'sparse_array'
 
 #
 # 1. split headline into words
@@ -12,7 +11,6 @@ require 'sparse_array'
 # 8. train with vectors of word IDs
 
 class LearnHeadlines < RubyFann::Standard
-
   def self.test
     lh = LearnHeadlines.new 
 
@@ -23,14 +21,12 @@ class LearnHeadlines < RubyFann::Standard
     lh.train
   end
 
-
   def initialize
     @max_word_id = 0
-    @number_of_inputs = 25000
+    @number_of_inputs = ENV['SU_NEON_NN_INPUTS'] || 25000
     @number_of_outputs = Sign.count
     @keywords = Keyword.all
   end
-
 
   # with stemming we'll probably never need more than 20,000 words in our vocabulary
   # training input is a vector of 20,000 with a 1 for each word that appears
@@ -46,12 +42,15 @@ class LearnHeadlines < RubyFann::Standard
     fann.train_on_data(train, 1000, 10, 0.1) # 1000 max_epochs, 10 errors between reports and 0.1 desired MSE (mean-squared-error)
 
     puts '>>> 4'
-    outputs = fann.run([0.3, 0.2, 0.4])    
+    test
   end
 
   def test
     hls = RecentHeadline.order(id: :desc).limit(100)
-    hls.each do |h| v = l.vectorize_headline(h) ; puts h.headline, fann.run(v) ; end ; nil
+    hls.each do |h|
+      v = l.vectorize_headline(h)
+      puts h.headline, fann.run(v)
+    end
   end
 
   def headlines
@@ -126,28 +125,4 @@ class LearnHeadlines < RubyFann::Standard
   end
 
   private
-end
-
-# based on https://stackoverflow.com/questions/5324654/can-i-create-an-array-in-ruby-with-default-values
-#class DefaultedSparseArray < SparseArray
-class DefaultedArray < Array
-  @default = 0
-  @max_length
-
-  def initialize(default = 0, max_length = 20000)
-    @default = default
-    @max_length = max_length
-  end
-
-  def [](index)
-    if index.is_a? Range
-      index.map {|i| self[i] }
-    else
-      fetch(index) { @default }
-    end
-  end
-
-  def length
-    return @max_length
-  end
 end
