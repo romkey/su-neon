@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20171111191642) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "configs", force: :cascade do |t|
     t.string "particle_access_token", null: false
     t.datetime "created_at", null: false
@@ -44,8 +47,8 @@ ActiveRecord::Schema.define(version: 20171111191642) do
   end
 
   create_table "keywords_signs", id: false, force: :cascade do |t|
-    t.integer "keyword_id"
-    t.integer "sign_id"
+    t.bigint "keyword_id"
+    t.bigint "sign_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["keyword_id"], name: "index_keywords_signs_on_keyword_id"
