@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171108043434) do
+ActiveRecord::Schema.define(version: 20171111191642) do
 
   create_table "configs", force: :cascade do |t|
     t.string "particle_access_token", null: false
@@ -38,7 +38,9 @@ ActiveRecord::Schema.define(version: 20171108043434) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "normalized", null: false
     t.index ["name"], name: "index_keywords_on_name"
+    t.index ["normalized"], name: "index_keywords_on_normalized"
   end
 
   create_table "keywords_signs", id: false, force: :cascade do |t|

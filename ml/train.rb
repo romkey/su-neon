@@ -12,8 +12,9 @@ require 'sparse_array'
 # 8. train with vectors of word IDs
 
 class LearnHeadlines < RubyFann::Standard
+
   def self.test
-    lh = LearnHeadlines.new Sign.find(2)
+    lh = LearnHeadlines.new 
 
     lh.headlines
 
@@ -23,46 +24,23 @@ class LearnHeadlines < RubyFann::Standard
   end
 
 
-  def initialize(sign)
-    @sign = sign
+  def initialize
     @max_word_id = 0
+    @number_of_inputs = 25000
+    @number_of_outputs = Sign.count
+    @keywords = Keyword.all
   end
 
-  def headlines
-    get_headlines
-    get_negatives
-
-    eighty_percent = (@headlines.length*80)/100
-
-    @training_headlines = @headlines.first(eighty_percent)
-    @testing_headlines = @headlines.last(@headlines.count - eighty_percent)
-
-
-    puts ">>> TRAINING"
-    pp @training_headlines.count
-
-    puts ">>> TESTING"
-    pp @testing_headlines.count
-  end
-
-  def write_training_file
-    file = File.open('./training-data', 'w')
-
-    
-  end
 
   # with stemming we'll probably never need more than 20,000 words in our vocabulary
   # training input is a vector of 20,000 with a 1 for each word that appears
   # we have 12 outputs, one for each sign - 1 means the sign is on, 0 off
   def train
-    train_data = headlines_to_arrays(@training_headlines)
-
     puts '>>> 1'
-#    pp data.inspect
-    train = RubyFann::TrainData.new(inputs: train_data, desired_outputs: [[0.9]] )
+    train = RubyFann::TrainData.new(filename: './train.data')
 
     puts '>>> 2'
-    fann = RubyFann::Standard.new(num_inputs: 20000, hidden_neurons: [2, 8, 4, 3, 4], num_outputs: 1)
+    fann = RubyFann::Standard.new(num_inputs: @number_of_inputs, hidden_neurons: [@number_of_inputs/3, @number_of_inputs/9], num_outputs: @number_of_outputs)
 
     puts '>>> 3'
     fann.train_on_data(train, 1000, 10, 0.1) # 1000 max_epochs, 10 errors between reports and 0.1 desired MSE (mean-squared-error)
@@ -71,68 +49,71 @@ class LearnHeadlines < RubyFann::Standard
     outputs = fann.run([0.3, 0.2, 0.4])    
   end
 
-  def get_headlines
-    filter = Stopwords::Snowball::Filter.new "en"
-    keywords = LearnHeadlines.normalize_words! Keyword.where(sign: @sign)
+  def test
+    hls = RecentHeadline.order(id: :desc).limit(100)
+    hls.each do |h| v = l.vectorize_headline(h) ; puts h.headline, fann.run(v) ; end ; nil
+  end
 
-    matched_headlines = []
-    matched_headlines_ids = []
+  def headlines
+    total_headlines = RecentHeadline.count
+    eighty_percent = (total_headlines*80)/100
 
-    RecentHeadline.all.each do |headline|
-      words = headline.normalized
-      keywords.each do |k|
-        if words.include? k
-          matched_headlines.push words
-          matched_headline_ids.push headline.id
-        end
+    @training_headlines = RecentHeadline.order(id: :asc).limit(eighty_percent)
+    @testing_headlines = RecentHeadline.order(id: :desc).limit(total_headlines - eighty_percent)
+
+    puts ">>> TRAINING"
+    pp @training_headlines.count
+
+    puts ">>> TESTING"
+    pp @testing_headlines.count
+  end
+
+  # FANN training data file format
+  # http://leenissen.dk/fann/html/files/fann_train-h.html#fann_read_train_from_file
+  #
+  # num_train_data num_input num_output
+  # inputdata seperated by space
+  # outputdata seperated by space
+  def write_training_file
+    file = File.open('./train.data', 'w')
+
+    file.puts "#{@training_headlines.count} #{@number_of_inputs} #{@number_of_outputs}"
+    @training_headlines.find_each do |headline|
+      file.puts vectorize_headline(headline).join(' ')
+      file.puts vectorized_signs(headline).join(' ')
+      file.puts
+      file.puts
+    end
+
+    file.close
+  end
+
+
+  def vectorized_signs(headline)
+    vector = Array.new(@number_of_outputs) { |i| 0 }
+
+    words = headline.normalized.uniq
+    @keywords.each do |k|
+      if words.include? k.normalized
+        k.signs.pluck(:id).each { |id| vector[id] = 1 }
       end
     end
 
-    @headline_ids = matched_headlines_id.uniq
-    @headlines = matched_headlines.uniq
+    vector
   end
 
-  def get_negatives
-    @negatives = []
 
-    count = 0
-    max_id = RecentHeadlines.last.id
-    goal = @headlines.length
-    loop do
-      return if count >= goal
+  def vectorize_headline(headline)
+    vector = Array.new(@number_of_inputs) { |i| 0 }
+    words = headline.normalized
 
-      attempt_id = rand(max_id)
-      next if @headline_ids.include? attempt_id
-
-      headline = RecentHeadlines.find attempt_id
-      next unless headline
-
-      @negatives.push headline
-
-      count += 1
-    end
-  end
-
-  def headlines_to_arrays(headlines)
-    input_vectors = []
-    output_vectors = []
-
-    headlines.each do |words|
-      vector = DefaultedSparseArray.new(0)
-#      vector = Array.new(5000)
-#     (0..4999).each do |x| vector[x] = 0 end
-
-      word_ids = words.each do |word|
-        id = MlDictionary.where(word: word).first_or_create.id
-        vector[id] = 1
-        @max_word_id = [ @max_word_id, id ].max
-      end
-
-      input_vectors.push vector
-      output_vectors.push [ 1 ]
+    words.each do |word|
+      id = MlDictionary.where(word: word).first_or_create.id
+      vector[id] = 1
+      @max_word_id = [ @max_word_id, id ].max
     end
 
-    [ input_vectors, output_vectors ]
+    vector
   end
 
   def seed_dictionary
@@ -145,14 +126,11 @@ class LearnHeadlines < RubyFann::Standard
   end
 
   private
-
-  def self.normalize_words!(keywords)
-    keywords.map { |keyword| keyword.name.stem }
-  end
 end
 
 # based on https://stackoverflow.com/questions/5324654/can-i-create-an-array-in-ruby-with-default-values
-class DefaultedSparseArray < SparseArray
+#class DefaultedSparseArray < SparseArray
+class DefaultedArray < Array
   @default = 0
   @max_length
 
