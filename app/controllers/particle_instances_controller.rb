@@ -63,12 +63,12 @@ class ParticleInstancesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_particle
+    def set_particle_instance
       @particle = ParticleInstance.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def particle_params
-      params.require(:particle).permit(:name, :particle_id)
+      params.require(:particle_instance).permit(:name, :particle_id)
     end
 end

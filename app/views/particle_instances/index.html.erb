@@ -17,8 +17,7 @@
         <td><%= particle.name %></td>
         <td><%= particle.particle_id %></td>
         <td><%= link_to 'Show', particle %></td>
-        <td><%= link_to 'Edit', edit_particle_path(particle) %></td>
-        <td><%= link_to 'Destroy', particle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_particle_instance_path(particle) %></td>
       </tr>
     <% end %>
   </tbody>
