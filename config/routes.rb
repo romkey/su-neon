@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   resources :configs
   resources :keywords
   resources :signs
-  resources :particles
-  post '/particles/login', to: 'particles#login'
+  resources :particle_instances
+#  post '/particles/login', to: 'particles#login'
   get '/admin/all_on', to: 'admin#all_on'
   get '/admin/all_off', to: 'admin#all_off'
   get '/admin/refresh_now', to: 'admin#refresh_now'

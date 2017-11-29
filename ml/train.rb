@@ -23,7 +23,8 @@ class LearnHeadlines < RubyFann::Standard
 
   def initialize
     @max_word_id = 0
-    @number_of_inputs = ENV['SU_NEON_NN_INPUTS'] || 25000
+    @number_of_inputs = ENV['SU_NEON_NN_INPUTS'].to_i || 25000
+    puts "#{@number_of_inputs} inputs"
     @number_of_outputs = Sign.count
     @keywords = Keyword.all
   end
@@ -36,20 +37,27 @@ class LearnHeadlines < RubyFann::Standard
     train = RubyFann::TrainData.new(filename: './train.data')
 
     puts '>>> 2'
-    fann = RubyFann::Standard.new(num_inputs: @number_of_inputs, hidden_neurons: [@number_of_inputs/3, @number_of_inputs/9], num_outputs: @number_of_outputs)
+    @fann = RubyFann::Standard.new(num_inputs: @number_of_inputs, hidden_neurons: [@number_of_inputs/20, @number_of_inputs/40], num_outputs: @number_of_outputs)
 
     puts '>>> 3'
-    fann.train_on_data(train, 1000, 10, 0.1) # 1000 max_epochs, 10 errors between reports and 0.1 desired MSE (mean-squared-error)
+    @fann.train_on_data(train, 1000, 10, 0.1) # 1000 max_epochs, 10 errors between reports and 0.1 desired MSE (mean-squared-error)
+    @fann.save('./headlines.net')
 
     puts '>>> 4'
     test
   end
 
+  def load
+    @fann = RubyFann::Standard.new(filename: './headlines.net')
+  end
+
   def test
     hls = RecentHeadline.order(id: :desc).limit(100)
     hls.each do |h|
-      v = l.vectorize_headline(h)
-      puts h.headline, fann.run(v)
+      v = vectorize_headline(h)
+      next unless v
+
+      puts h.headline, @fann.run(v)
     end
   end
 
@@ -108,6 +116,9 @@ class LearnHeadlines < RubyFann::Standard
 
     words.each do |word|
       id = MlDictionary.where(word: word).first_or_create.id
+      if id >= @number_of_inputs
+        return nil
+      end
       vector[id] = 1
       @max_word_id = [ @max_word_id, id ].max
     end

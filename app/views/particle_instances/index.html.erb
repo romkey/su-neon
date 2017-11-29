@@ -12,7 +12,7 @@
   </thead>
 
   <tbody>
-    <% @particles.each do |particle| %>
+    <% @particle_instances.each do |particle| %>
       <tr>
         <td><%= particle.name %></td>
         <td><%= particle.particle_id %></td>
@@ -26,4 +26,4 @@
 
 <br>
 
-<%= link_to 'New Particle', new_particle_path %>
+<%= link_to 'New Particle', new_particle_instance_path %>

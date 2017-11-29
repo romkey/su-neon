@@ -4,7 +4,7 @@ class ParticleInstancesController < ApplicationController
   # GET /particle_instances
   # GET /particle_instances.json
   def index
-    @particle_instances = Particle.all
+    @particle_instances = ParticleInstance.all
   end
 
   # GET /particle_instances/1
