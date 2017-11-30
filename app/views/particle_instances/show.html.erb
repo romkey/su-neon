@@ -10,5 +10,18 @@
   <%= @particle.particle_id %>
 </p>
 
+<a href='/relay/1/1?particle_instances_id=<%= @particle.id %>' class="btn btn-primary">Relay 1 On</a>
+<a href='/relay/2/1?particle_instances_id=<%= @particle.id %>' class="btn btn-primary">Relay 2 On</a>
+<a href='/relay/3/1?particle_instances_id=<%= @particle.id %>' class="btn btn-primary">Relay 3 On</a>
+<a href='/relay/4/1?particle_instances_id=<%= @particle.id %>' class="btn btn-primary">Relay 4 On</a>
+<br>
+<br>
+<a href='/relay/1/0?particle_instances_id=<%= @particle.id %>' class="btn btn-primary">Relay 1 Off</a>
+<a href='/relay/2/0?particle_instances_id=<%= @particle.id %>' class="btn btn-primary">Relay 2 Off</a>
+<a href='/relay/3/0?particle_instances_id=<%= @particle.id %>' class="btn btn-primary">Relay 3 Off</a>
+<a href='/relay/4/0?particle_instances_id=<%= @particle.id %>' class="btn btn-primary">Relay 4 Off</a>
+<br>
+<br>
+
 <%= link_to 'Edit', edit_particle_instance_path(@particle) %> |
 <%= link_to 'Back', particle_instances_path %>
