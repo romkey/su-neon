@@ -19,7 +19,7 @@
 
 /* https://codepen.io/FelixRilling/pen/qzfoc
  */
-.sign {
+.signx {
     font-family: 'Pacifico', cursive;
 
   text-align: center;
@@ -34,12 +34,12 @@
     color: #FFDD1B;
 }
 
-.card-sign {
+.card-signx {
     background-color: #222222;
     background: repeating-linear-gradient(45deg, #2b2b2b 0%, #2b2b2b 10%, #222222 0%, #222222 50%) 0 / 15px 15px;
 }
 
-.sign:hover, .lit {
+.signx:hover, .litx {
   -webkit-animation: neon3 1.5s ease-in-out infinite alternate;
   -moz-animation: neon3 1.5s ease-in-out infinite alternate;
   animation: neon3 1.5s ease-in-out infinite alternate;

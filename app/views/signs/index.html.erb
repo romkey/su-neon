@@ -3,11 +3,7 @@
   <div class='row'>
     <% @signs.each do |sign| %>
     <div class='w-25 p-3'>
-      <div class='card card-sign'>
-	<div class='card-block'>
-	  <h2 class='card-title sign <%= " lit" if sign.lit %>'><%= link_to sign.name, sign %></h2>
-	</div>
-      </div>
+          <%= image_tag "#{sign.lit ? 'ON' : 'OFF'}_#{sign.name.downcase.gsub(/\s/, '')}.png", height: 100, width: 100, title: "#{sign.name} is #{sign.lit ? '' : 'not '}lit" %>
     </div>
     <% end %>
   </div>
