@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= form.label :particle_id %>
-    <%= form.select(:particle_instance_id, options_for_select(ParticleInstance.order(:name).pluck(:name, :id), sign.particle_instance_id)) %>
+    <%= form.select(:particle_instance_id, options_for_select(ParticleInstance.order(:name).pluck(:name, :id), sign.particle_instances_id)) %>
   </div>
 
   <div class="field">
