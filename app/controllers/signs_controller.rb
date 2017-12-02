@@ -2,7 +2,7 @@ class SignsController < ApplicationController
   before_action :set_sign, only: [:show, :edit, :update, :destroy]
   skip_before_action :authenticate_user!, only: [:index, :show]
 
-  layout "signs", only: [ :index ]
+#  layout "signs", only: [ :index ]
 
   # GET /signs
   # GET /signs.json
@@ -12,7 +12,7 @@ class SignsController < ApplicationController
     @recent_headlines = RecentHeadline.order(created_at: :desc).limit(10)
 
     respond_to do |format|
-      format.html
+      format.html { render layout: current_user ? "application" : "signs" }
       format.json { send_data @signs.to_json, filename: "signs.json" }
     end
   end
