@@ -1,6 +1,13 @@
-<h1>Editing Sign</h1>
+<div class='card'>
+  <%= image_tag("#{@sign.lit ? 'ON' : 'OFF'}_#{@sign.name.downcase.gsub(/\s/, '')}.png", height: 100, width: 100, title: "#{@sign.name} is #{@sign.lit ? '' : 'not '}lit" ) %>
+
+  <div class='card-body>
+
+<h1 class='card-title'>Editing Sign</h1>
 
 <%= render 'form', sign: @sign %>
 
 <%= link_to 'Show', @sign %> |
 <%= link_to 'Back', signs_path %>
+  </div>
+</div>
