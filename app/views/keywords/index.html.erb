@@ -11,9 +11,8 @@
   <tbody>
     <% @keywords.each do |keyword| %>
       <tr>
-        <td><%= link_to keyword.name, keyword %></td>
+        <td><%= link_to keyword.name, edit_keyword_path(keyword) %></td>
 	<td><%= keyword.signs.pluck(:name).join(', ') %></td>
-        <td><%= link_to 'Edit', edit_keyword_path(keyword) %></td>
         <td><%= link_to 'Delete', keyword, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

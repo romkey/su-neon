@@ -7,7 +7,7 @@ class SignsController < ApplicationController
   # GET /signs
   # GET /signs.json
   def index
-    @signs = Sign.order(name: :asc)
+    @signs = Sign.order(order: :asc)
     #    @recent_headlines = RecentHeadline.order(created_at: :desc).limit(500)
     @recent_headlines = RecentHeadline.order(created_at: :desc).limit(10)
 
@@ -81,6 +81,6 @@ class SignsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sign_params
-      params.require(:sign).permit(:name, :particle_instance_id, :relay, :picture)
+      params.require(:sign).permit(:name, :particle_instance_id, :relay, :order)
     end
 end
