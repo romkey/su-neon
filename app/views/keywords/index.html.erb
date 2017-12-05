@@ -1,13 +1,10 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Keywords</h1>
 
 <table class='table'>
   <thead>
     <tr>
       <th>Name</th>
-      <th>Category</th>
-      <th colspan="3"></th>
+      <th>Signs</th>
     </tr>
   </thead>
 
@@ -15,8 +12,9 @@
     <% @keywords.each do |keyword| %>
       <tr>
         <td><%= link_to keyword.name, keyword %></td>
+	<td><%= keyword.signs.pluck(:name).join(', ') %></td>
         <td><%= link_to 'Edit', edit_keyword_path(keyword) %></td>
-        <td><%= link_to 'Destroy', keyword, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', keyword, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

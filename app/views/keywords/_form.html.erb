@@ -17,11 +17,18 @@
   </div>
 
   <div class="field">
-    <%= form.label 'Category' %>
-    <%= select :keyword, :sign_id, options_for_select(Sign.all.order(name: :asc).pluck(:name, :id)) %>
-  </div>
+    <%= form.label 'Signs' %>
+    <%= hidden_field_tag("keyword[sign_ids][]", nil) %>
+    <div class='form-row'>
+      <% Sign.order(:name).each do |sign| %>
+        <div class='form-check form-check-inline w-25'>
+	  <label class='form-check-label'>
+	    <%= check_box_tag "keyword[sign_ids][]", sign.id, false, class: 'form-check-input' %><%= sign.name %>
+	  </label>
+        </div>
+      <% end %>
+    </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+
 <% end %>
