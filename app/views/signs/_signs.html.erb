@@ -1,0 +1,11 @@
+        <div class='row'>
+          <% @signs.each do |sign| %>
+            <div class='w-25 p-3'>
+              <% if current_user %>
+                <%= link_to image_tag("#{sign.lit ? 'ON' : 'OFF'}_#{sign.name.downcase.gsub(/\s/, '')}.png", height: 100, width: 100, title: "#{sign.name} is #{sign.lit ? '' : 'not '}lit"), edit_sign_path(sign) %>
+              <% else %>
+                <%= image_tag("#{sign.lit ? 'ON' : 'OFF'}_#{sign.name.downcase.gsub(/\s/, '')}.png", height: 100, width: 100, title: "#{sign.name} is #{sign.lit ? '' : 'not '}lit") %>
+              <% end %>
+            </div><!-- w-25 p-3 -->
+          <% end %>
+        </div><!-- row -->

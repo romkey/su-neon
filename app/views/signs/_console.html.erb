@@ -1,0 +1,8 @@
+<p>
+      Headlines last updated <%= @recent_headlines.first.created_at.in_time_zone("Pacific Time (US & Canada)") %> Pacific Time
+</p>
+
+<p><b>Work in progress, these buttons don't work yet</b></p>
+      <a href="#" class="btn btn-primary" role="button" aria-pressed="false">Update Headlines Now</a><br/><br/>
+
+      <a href="#" class="btn btn-danger" role="button" aria-pressed="false" data-method="delete" data-confirm="Removing all keywords is irreversible. Are you sure?">Remove all keywords</a>

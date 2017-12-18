@@ -1,0 +1,16 @@
+      <%= button_to "All On", "/signs/all_on", remote: true, class: "btn btn-success", role: "button" %><br />
+      <%= button_to "All Off", "/signs/all_off", remote: true, class: "btn btn-secondary", role: "button" %>
+      <table class='table'>
+        <tr>
+          <th>Sign</th>
+          <th>Keywords</th>
+        </tr>
+        <% @signs.each do |sign| %>
+          <tr>
+            <td><%= sign.name %></td>
+            <td><%= sign.keywords.pluck(:name).join(', ') %></td>
+            <td><%= button_to "On", "/signs/#{sign.id }?state=1", remote: true, class: "btn btn-success",  role: "button" %></td>
+            <td><%= button_to "Off", "/signs/#{sign.id }?state=0", remote: true, class: "btn btn-secondary",  role: "button" %></td>
+          </tr>
+        <% end %>
+      </table>
