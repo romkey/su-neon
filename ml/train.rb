@@ -95,6 +95,17 @@ class LearnHeadlines < RubyFann::Standard
     file.close
   end
 
+  def write_turi_file
+    file = File.open('./turi.data', 'w')
+
+    topics = Sign.order(id: :asc).pluck(:name).downcase.join(' ')
+
+    file.puts "word, topic"
+    @training_headlines.find_each do |headline|
+      sanitized = headline.headline.split(/\s/).map { |word| word.downcase.gsub(/\W/, '') }.join(' ')
+      file.puts "#{topics} #{sanitized}, #{vectorized_signs(headline).join(' ')}"
+    end
+  end
 
   def vectorized_signs(headline)
     vector = Array.new(@number_of_outputs) { |i| 0 }

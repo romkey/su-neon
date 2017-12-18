@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   get '/admin/all_off', to: 'admin#all_off'
   get '/admin/refresh_now', to: 'admin#refresh_now'
   get '/relay/:id/:state', to: 'relay#activate'
+  post '/signs/all_on', to: 'signs#all_on'
+  post '/signs/all_off', to: 'signs#all_off'
+  post '/signs/:id', to: 'signs#control'
 
   devise_for :users
 

@@ -1,5 +1,5 @@
 class SignsController < ApplicationController
-  before_action :set_sign, only: [:show, :edit, :update, :destroy]
+  before_action :set_sign, only: [:show, :control, :edit, :update, :destroy]
   skip_before_action :authenticate_user!, only: [:index, :show]
 
 #  layout "signs", only: [ :index ]
@@ -20,6 +20,29 @@ class SignsController < ApplicationController
   # GET /signs/1
   # GET /signs/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.json
+    end
+  end
+
+  # POST /signs/1
+  # POST /signs/1.json
+  def control
+    state = params.permit([:state])[:state]
+    if state
+      if state == 1
+        @sign.turn_on
+      else
+        @sign.turn_off
+      end
+    end
+
+    respond_to do |format|
+      format.html
+      format.json {
+      }
+    end
   end
 
   # GET /signs/new
@@ -70,6 +93,26 @@ class SignsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to signs_url, notice: 'Sign was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def all_on
+    respond_to do |format|
+      format.json { 
+        Sign.all.each do |sign|
+          sign.turn_on
+        end
+      }
+    end
+  end
+
+  def all_off
+    respond_to do |format|
+      format.json { 
+        Sign.all.each do |sign|
+          sign.turn_off
+        end
+      }
     end
   end
 

@@ -1,41 +1,88 @@
 <div class='row'>
-<div class='col-6'>
-  <div class='row'>
-    <% @signs.each do |sign| %>
-    <div class='w-25 p-3'>
-<% if current_user %>
-          <%= link_to image_tag("#{sign.lit ? 'ON' : 'OFF'}_#{sign.name.downcase.gsub(/\s/, '')}.png", height: 100, width: 100, title: "#{sign.name} is #{sign.lit ? '' : 'not '}lit"), edit_sign_path(sign) %>
-<% else %>
-          <%= image_tag("#{sign.lit ? 'ON' : 'OFF'}_#{sign.name.downcase.gsub(/\s/, '')}.png", height: 100, width: 100, title: "#{sign.name} is #{sign.lit ? '' : 'not '}lit") %>
-<% end %>
+  <div class='col-6'>
+
+    <ul class="nav nav-tabs" role="tablist" id="signsTab">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#signs" id="signs-tab" role="tab" aria-controls="signs" aria-selected="true">Signs</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#tinker"  data-toggle="tab" id="tinker-tab" role="tab" aria-controls="tinker" aria-selected="false">Tinker</a>
+      </li>
+      <% if current_user %>
+        <li class="nav-item">
+          <a class="nav-link" href="#console" data-toggle="tab" id="console-tab" aria-controls="console" aria-selected="false">Console</a>
+        </li>
+      <% end %>
+    </ul>
+
+    <div class="tab-content" id="signsTabContent">
+      <div class="tab-pane fade show active" id="signs" role="tabpanel" aria-labelledby="home-tab">
+
+        <div class='row'>
+          <% @signs.each do |sign| %>
+            <div class='w-25 p-3'>
+              <% if current_user %>
+                <%= link_to image_tag("#{sign.lit ? 'ON' : 'OFF'}_#{sign.name.downcase.gsub(/\s/, '')}.png", height: 100, width: 100, title: "#{sign.name} is #{sign.lit ? '' : 'not '}lit"), edit_sign_path(sign) %>
+              <% else %>
+                <%= image_tag("#{sign.lit ? 'ON' : 'OFF'}_#{sign.name.downcase.gsub(/\s/, '')}.png", height: 100, width: 100, title: "#{sign.name} is #{sign.lit ? '' : 'not '}lit") %>
+              <% end %>
+            </div><!-- w-25 p-3 -->
+          <% end %>
+        </div><!-- row -->
+      </div><!-- tab-pane' -->
+
+    <div class="tab-pane fade" id="tinker" role="tabpanel" aria-labelledby="tinker-tab">
+      <%= button_to "All On", "/signs/all_on", remote: true, class: "btn btn-success", role: "button" %><br />
+      <%= button_to "All Off", "/signs/all_off", remote: true, class: "btn btn-secondary", role: "button" %>
+      <table class='table'>
+        <tr>
+          <th>Sign</th>
+          <th>Keywords</th>
+        </tr>
+        <% @signs.each do |sign| %>
+          <tr>
+            <td><%= sign.name %></td>
+            <td><%= sign.keywords.pluck(:name).join(', ') %></td>
+            <td><%= button_to "On", "/signs/#{sign.id }?state=1", remote: true, class: "btn btn-success",  role: "button" %></td>
+            <td><%= button_to "Off", "/signs/#{sign.id }?state=0", remote: true, class: "btn btn-secondary",  role: "button" %></td>
+          </tr>
+        <% end %>
+      </table>
     </div>
-    <% end %>
+
+    <div class="tab-pane fade" id="console" role="tabpanel" aria-labelledby="console-tab">
+      Headlines last updated <%= %>
+
+      <a href="#" class="btn btn-primary" role="button" aria-pressed="false">Update Headlines Now</a>
+
+      <a href="#" class="btn btn-danger" role="button" aria-pressed="false" data-method="delete" data-confirm="Removing all keywords is irreversible. Are you sure?">Remove all keywords</a>
+    </div>
+
+    </div>
   </div>
-</div>
 
-<div class='col-6'>
-  <%= form_tag action: 'create', controller: 'keywords', method: 'post' do %>
-    <label for='keyword''><b>Enter keyword and select corresponding signs</b></label>
-    <input name='keyword[name]' id='keyword[name]' type='text' class='form-control'>
-    <%= hidden_field_tag("keyword[sign_ids][]", nil) %>
-    <div class='form-row'>
-      <% Sign.order(:name).each do |sign| %>
-        <div class='form-check form-check-inline w-25'>
-	  <label class='form-check-label'>
-	    <%= check_box_tag "keyword[sign_ids][]", sign.id, false, class: 'form-check-input' %><%= sign.name %>
-	  </label>
-	</div>
-	<% end %>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  <% end %>
-
-<table class='table'>
-<% @recent_headlines.each do |headline| %>
-  <tr>
-    <td><%= link_to headline.headline, headline.link %></td>
-  </tr>
-<% end %>
-</table>
-</div>
+  <div class='col-6'>
+    <%= form_tag action: 'create', controller: 'keywords', method: 'post' do %>
+      <label for='keyword''><b>Enter keyword and select corresponding signs</b></label>
+      <input name='keyword[name]' id='keyword[name]' type='text' class='form-control'>
+      <%= hidden_field_tag("keyword[sign_ids][]", nil) %>
+      <div class='form-row'>
+        <% Sign.order(:name).each do |sign| %>
+          <div class='form-check form-check-inline w-25'>
+            <label class='form-check-label'>
+              <%= check_box_tag "keyword[sign_ids][]", sign.id, false, class: 'form-check-input' %><%= sign.name %>
+            </label>
+          </div>
+        <% end %>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    <% end %>
+    <table class='table'>
+      <% @recent_headlines.each do |headline| %>
+        <tr>
+          <td><%= link_to headline.headline, headline.link %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
 </div>

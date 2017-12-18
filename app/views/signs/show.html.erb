@@ -1,9 +1,16 @@
   <div class='card  w-25'>
     <div class='card-block'>
+      <%= image_tag("#{@sign.lit ? 'ON' : 'OFF'}_#{@sign.name.downcase.gsub(/\s/, '')}.png", height: 100, width: 100, title: "#{@sign.name} is #{@sign.lit ? '' : 'not '}lit" ) %>
       <h2 class='card-title sign<%= " lit" if @sign.lit %>'><a><%=@sign.name %></a></h2>
       <% @sign.keywords do |keyword| %>
         <%= keyword.name %>
       <% end %>
+<% if @sign.particle_instance %>
+      Particle <%= @sign.particle_instance.name %>, relay <%= @sign.relay %>
+<% else %>
+      Particle not set
+<% end %>
+    Order: <%= @sign.order %>
     </div>
   </div>
 
