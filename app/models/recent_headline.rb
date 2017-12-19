@@ -21,6 +21,14 @@ class RecentHeadline < ApplicationRecord
     filter.filter(headline.downcase.gsub(/[^a-z\s]/, '').split).map { |word| word.stem }
   end
 
+  def matched_keywords
+    title_words = normalized
+
+    Keyword.all.select do |keyword|
+      title_words.include?(keyword.normalized)
+    end
+  end
+
   def self.from_json(json)
     objs = JSON.parse json, symbolize_keys: true
 

@@ -9,7 +9,7 @@ class SignsController < ApplicationController
   def index
     @signs = Sign.order(order: :asc)
     #    @recent_headlines = RecentHeadline.order(created_at: :desc).limit(500)
-    @recent_headlines = RecentHeadline.order(created_at: :desc).limit(10)
+    @recent_headlines = RecentHeadline.where(current: true).order(created_at: :desc)
 
     respond_to do |format|
       format.html { render layout: current_user ? "application" : "signs" }

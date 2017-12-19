@@ -7,7 +7,8 @@ class ScanHeadlinesJob < ApplicationJob
 
   def perform
     RecentHeadline.update_all(current: false)
-    Sign.update_all(hits: 0, score: 1.0)
+    Sign.update_all(hits: 0, score: 0.0)
+
     NewsSource.all.each do |ns|
       ScanHeadlinesJob.scan(ns)
     end
@@ -53,18 +54,16 @@ class ScanHeadlinesJob < ApplicationJob
                                    link: item.link,
                                    news_source: source,
                                    current: true
+        else
+          rh.update_attributes(current: true)
         end
 
-        Keyword.find_each do |keyword|
-          title = rh.normalized.downcase.gsub /'"@,\.\?/, ''
-
-          if title.split(' ').include?(keyword.normalized)
-            puts "hit '#{keyword.name}' in '#{item.title}'"
-            keyword.signs do |sign|
-              sign.update_attributes(hits: sign.hits + 1)
-            end
+        rh.matched_keywords.each do |keyword|
+          keyword.signs.each do |sign|
+            sign.update_attributes(hits: sign.hits + 1)
           end
         end
+
       end
 
       source.update_attributes(last_processed_at: Time.now)

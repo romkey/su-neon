@@ -51,6 +51,10 @@
         <tr>
           <td><%= link_to headline.headline, headline.link %></td>
         </tr>
+      <tr>
+	<td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<%= headline.matched_keywords.pluck(:name).join(', ') %>
+	</td>
+      </tr>
       <% end %>
     </table>
   </div>
