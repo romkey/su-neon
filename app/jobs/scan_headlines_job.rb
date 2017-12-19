@@ -6,54 +6,41 @@ class ScanHeadlinesJob < ApplicationJob
   queue_as :default
 
   def perform
-    state = {}
-    Sign.all.each do |sign|
-      keyword_count = 0
-      Keyword.all.each do |keyword|
-        keyword_count += 1 if keyword.signs.exists?(sign.id)
-      end
-
-      state[sign.name] = { hits: 0,
-                           keyword_count: keyword_count,
-                           score: 0.0,
-                           sign: sign
-                         }
-    end
-
+    RecentHeadline.update_all(current: false)
+    Sign.update_all(hits: 0, score: 1.0)
     NewsSource.all.each do |ns|
-      ScanHeadlinesJob.scan(ns, state)
+      ScanHeadlinesJob.scan(ns)
     end
 
     threshold = Config.first.threshold / 100.0
 
-    max_keywords = state.map { |key, st| st[:keyword_count] }.max
+    max_keywords = Sign.all.map { |sign| sign.keywords.count }.max
     max_keywords *= 1.0
 
-    state.each do |key, st|
-      puts "#{st[:sign].name} score #{st[:score]} max keywords #{max_keywords} keyword count #{st[:keyword_count]}  hits #{st[:hits]}"
-      if st[:keyword_count] > 0
-        st[:score] = max_keywords/st[:keyword_count] * st[:hits]
+    Sign.find_each do |sign|
+      keyword_count = sign.keywords.count
+      puts "#{sign.name} score #{sign.score} max keywords #{max_keywords} keyword count #{keyword_count}  hits #{sign.hits}"
+      if keyword_count > 0
+        sign.update_attributes(score: max_keywords/keyword_count * sign.hits)
       end
-      puts "#{st[:sign].name} #{st[:score]}"
+      puts "#{sign.name} #{sign.score}"
     end
 
-    max_score = state.map { |key, st| puts "#{st[:sign].name} #{st[:score]}" ; st[:score] }.max
-    state.each do |key, st|
-      st[:score] /= 1.0*max_score
-      if st[:score] >= threshold
-        puts "ON >>> #{st[:sign].name} #{st[:score]} #{threshold}"
-        st[:sign].turn_on
+    max_score = Sign.all.map { |sign| puts "#{sign.name} #{sign.score}" ; sign.score }.max
+    Sign.find_each do |sign|
+      sign.update_attributes(score: (sign.score/1.0)*max_score)
+      if sign.score >= threshold
+        puts "ON >>> #{sign.name} #{sign.score} #{threshold}"
+        sign.turn_on
       else
-        puts "0FF >>> #{st[:sign].name} #{st[:score]} #{threshold}"
-        st[:sign].turn_off
+        puts "0FF >>> #sign.name} #{sign.score} #{threshold}"
+        sign.turn_off
       end
-      puts ">>> #{key} keywords #{st[:keyword_count]} hits #{st[:hits]} score #{st[:score]}"
+      puts ">>> #{sign.name} keywords #{sign.keywords.count} hits #{sign.hits} score #{sign.score}"
     end
-
-    state
   end
 
-  def self.scan(source, state)
+  def self.scan(source)
     begin
       feed_file = open source.feed_url
 
@@ -64,7 +51,8 @@ class ScanHeadlinesJob < ApplicationJob
         unless rh
           rh = RecentHeadline.create  headline: item.title,
                                    link: item.link,
-                                   news_source: source
+                                   news_source: source,
+                                   current: true
         end
 
         Keyword.find_each do |keyword|
@@ -72,7 +60,9 @@ class ScanHeadlinesJob < ApplicationJob
 
           if title.split(' ').include?(keyword.normalized)
             puts "hit '#{keyword.name}' in '#{item.title}'"
-            state[keyword.sign.name][:hits] += 1
+            keyword.signs do |sign|
+              sign.update_attributes(hits: sign.hits + 1)
+            end
           end
         end
       end

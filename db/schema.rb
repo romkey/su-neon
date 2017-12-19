@@ -10,10 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171111191642) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20171219154254) do
 
   create_table "configs", force: :cascade do |t|
     t.string "particle_access_token", null: false
@@ -47,8 +44,8 @@ ActiveRecord::Schema.define(version: 20171111191642) do
   end
 
   create_table "keywords_signs", id: false, force: :cascade do |t|
-    t.bigint "keyword_id"
-    t.bigint "sign_id"
+    t.integer "keyword_id"
+    t.integer "sign_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["keyword_id"], name: "index_keywords_signs_on_keyword_id"
@@ -102,6 +99,7 @@ ActiveRecord::Schema.define(version: 20171111191642) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "link", default: "", null: false
+    t.boolean "current", default: false, null: false
     t.index ["news_source_id"], name: "index_recent_headlines_on_news_source_id"
   end
 
@@ -114,6 +112,8 @@ ActiveRecord::Schema.define(version: 20171111191642) do
     t.string "picture"
     t.boolean "lit", default: false, null: false
     t.integer "order", default: 0, null: false
+    t.integer "hits", default: 0, null: false
+    t.float "score", default: 0.0, null: false
     t.index ["name"], name: "index_signs_on_name"
   end
 
