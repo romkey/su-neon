@@ -13,7 +13,7 @@ class ScanHeadlinesJob < ApplicationJob
       ScanHeadlinesJob.scan(ns)
     end
 
-    threshold = Config.first.threshold / 100.0
+    threshold = Config.first.threshold
 
     max_keywords = Sign.all.map { |sign| sign.keywords.count }.max
     max_keywords *= 1.0
@@ -29,7 +29,7 @@ class ScanHeadlinesJob < ApplicationJob
 
     max_score = Sign.all.map { |sign| puts "#{sign.name} #{sign.score}" ; sign.score }.max
     Sign.find_each do |sign|
-      sign.update_attributes(score: (sign.score/1.0)*max_score)
+      sign.update_attributes(score: (sign.score*100)/max_score)
       if sign.score >= threshold
         puts "ON >>> #{sign.name} #{sign.score} #{threshold}"
         sign.turn_on
