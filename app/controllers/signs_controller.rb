@@ -30,6 +30,7 @@ class SignsController < ApplicationController
   # POST /signs/1.json
   def control
     state = params.permit([:state])[:state]
+    pp state
     if state
       if state == 1
         @sign.turn_on
@@ -40,8 +41,7 @@ class SignsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json {
-      }
+      format.json
     end
   end
 
