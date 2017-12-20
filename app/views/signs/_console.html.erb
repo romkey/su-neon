@@ -16,7 +16,7 @@
   </tr>
   <thead>
   <tbody>
-  <% Sign.order(order: :asc).find_each do |s| %>
+  <% @signs.each do |s| %>
   <tr>
     <td><%= s.name %></td>
     <td><%= s.keywords.count %></td>
