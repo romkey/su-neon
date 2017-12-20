@@ -29,7 +29,9 @@ class SignsController < ApplicationController
   # POST /signs/1
   # POST /signs/1.json
   def control
+    puts "CONTROL state 1"
     state = params.permit([:state])[:state]
+    puts "CONTROL state 2"
     puts state
     if state
       if state == 1
