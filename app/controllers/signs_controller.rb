@@ -30,7 +30,7 @@ class SignsController < ApplicationController
   # POST /signs/1.json
   def control
     state = params.permit([:state])[:state]
-    pp state
+    puts state
     if state
       if state == 1
         @sign.turn_on
