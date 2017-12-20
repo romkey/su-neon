@@ -51,10 +51,12 @@
         <tr>
           <td><%= link_to headline.headline, headline.link %></td>
         </tr>
+        <% if headline.matched_keywords.length > 0 %>
       <tr>
 	<td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<%= headline.matched_keywords.pluck(:name).join(', ') %>
 	</td>
       </tr>
+        <% end %>
       <% end %>
     </table>
   </div>

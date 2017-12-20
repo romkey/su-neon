@@ -21,7 +21,7 @@
     <td><%= s.name %></td>
     <td><%= s.keywords.count %></td>
     <td><%= s.hits %></td>
-    <td><%= s.score %></td>
+    <td><%= number_with_precision(s.score, precision: 2) %></td>
   </tr>
   <% end %>
   </tbody>
