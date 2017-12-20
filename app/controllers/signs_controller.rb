@@ -34,7 +34,7 @@ class SignsController < ApplicationController
     puts "CONTROL state 2"
     puts state
     if state
-      if state == 1
+      if state == "1"
         @sign.turn_on
       else
         @sign.turn_off
