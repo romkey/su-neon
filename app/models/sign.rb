@@ -22,6 +22,7 @@ class Sign < ApplicationRecord
     return unless particle_instance_id
 
     p = ParticleInstance.find particle_instance_id
+    puts "no particle instance #{particle_instance_id}" unless p
     return unless p
 
     p.set_relay relay, state 

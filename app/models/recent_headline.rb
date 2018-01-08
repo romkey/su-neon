@@ -36,4 +36,8 @@ class RecentHeadline < ApplicationRecord
       RecentHeadline.create! obj
     end
   end
+
+  def self.remove_old
+    RecentHeadline.where("created_at < ?", Time.now - 1.day).delete_all
+  end
 end
