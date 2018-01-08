@@ -14,7 +14,7 @@ class ParticleInstance < ApplicationRecord
     http.use_ssl = true
 
     request = Net::HTTP::Post.new(uri.request_uri, header)
-    request.body = "params=r#{relay},#{state ? 'HIGH' : 'LOW' }"
+    request.body = "params=r#{relay},#{state ? 'LOW' : 'HIGH' }"
     response = http.request(request)
 
     # -d access_token=123412341234 -d params=r1,HIGH
