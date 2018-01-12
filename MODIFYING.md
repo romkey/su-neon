@@ -4,14 +4,18 @@ These are instructions for updating and deploying the controller software.
 
 ## tl;dr
 
+If you're already familiar with git, Heroku and Ruby and are ready to go:
+
 1. Use your github account to access to `su-neon` repository. Talk to the right person at the iLab to be added as a collaborator.
 2. Install `rbenv` on your computer to set up a local Ruby environment.
 3. `git clone` the `su-neon` repo to your computer
 4. `bundle install`
-5. `heroku local` to start a local development server - point your browser to `localhost:3000` to access it
-6. `git commit -a` to save your changes
-7. `git push` to push them to the repository
-8. `git push heroku` to deploy them to heroku
+5. Install [Heroku command line interface](https://devcenter.heroku.com/categories/command-line)
+6. `heroku login` to set your Heroku credentials, and `heroku git:remote` to allow you to push to the Heroku app
+7. `heroku local` to start a local development server - point your browser to `localhost:3000` to access it
+8. Make your changes, test them and `git commit -a` to save them
+9. `git push` to push your work to the repository on Github
+10. `git push heroku` to deploy your changes to Heroku
 
 ## Github
 
@@ -105,6 +109,9 @@ Templates for the web pages can be found in `app/views/`
 git commit -a
 git push
 ```
+
+`commit` will pop up an editor window. You should add information
+about the changes, save the file and exit.
 
 4. Deploy them to Heroku:
 ```
