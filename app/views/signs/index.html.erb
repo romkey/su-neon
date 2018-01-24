@@ -17,6 +17,9 @@
 
     <div class="tab-content" id="signsTabContent">
       <div class="tab-pane fade show active" id="signs" role="tabpanel" aria-labelledby="home-tab">
+<% if Config.first.paused %>
+<h1>Headline updates are paused</h1>
+<% end %>
         <%= render partial: "signs" %>
       </div><!-- tab-pane' -->
 

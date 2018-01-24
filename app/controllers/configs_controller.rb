@@ -42,6 +42,12 @@ class ConfigsController < ApplicationController
   def update
     respond_to do |format|
       if @config.update(config_params)
+        # yes, this is awful
+        if config_params.include? :paused
+          redirect_to "/"
+          return
+        end
+
         format.html { redirect_to @config, notice: 'Config was successfully updated.' }
         format.json { render :show, status: :ok, location: @config }
       else
@@ -69,6 +75,6 @@ class ConfigsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def config_params
-      params.require(:config).permit(:particle_access_token, :threshold)
+      params.permit(:particle_access_token, :threshold, :paused)
     end
 end

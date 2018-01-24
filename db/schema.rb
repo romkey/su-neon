@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171219154254) do
+ActiveRecord::Schema.define(version: 20180124002345) do
 
   create_table "configs", force: :cascade do |t|
     t.string "particle_access_token", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "threshold"
+    t.boolean "paused", default: false, null: false
   end
 
   create_table "delayed_jobs", force: :cascade do |t|

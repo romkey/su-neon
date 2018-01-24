@@ -6,6 +6,8 @@ class ScanHeadlinesJob < ApplicationJob
   queue_as :default
 
   def perform
+    return if Config.first.paused
+
     RecentHeadline.update_all(current: false)
     Sign.update_all(hits: 0, score: 0.0)
 
