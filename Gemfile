@@ -43,7 +43,7 @@ gem 'omniauth-linkedin'
 gem 'omniauth-twitter'
 gem 'omniauth-github'
 
-gem 'rails_admin', '~> 1.2.0'
+gem 'rails_admin'
 gem 'font-awesome-rails'
 
 gem 'will_paginate'
