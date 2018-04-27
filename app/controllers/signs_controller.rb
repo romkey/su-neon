@@ -1,6 +1,6 @@
 class SignsController < ApplicationController
   before_action :set_sign, only: [:show, :control, :edit, :update, :destroy]
-  skip_before_action :authenticate_user!, only: [:index, :show]
+  skip_before_action :authenticate_user!, only: [:index, :show, :all_on, :all_off, :control]
 
 #  layout "signs", only: [ :index ]
 
