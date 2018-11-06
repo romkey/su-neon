@@ -49,7 +49,7 @@ gem 'font-awesome-rails'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
 
-gem 'bootstrap', '~> 4.0.0.beta.2.1'
+gem 'bootstrap', '~> 4.1.3'
 source 'https://rails-assets.org' do
   gem 'rails-assets-datetimepicker'
 #  gem 'rails-assets-tether', '>= 1.4.0'
