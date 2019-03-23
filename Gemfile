@@ -11,6 +11,7 @@ gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'mini_racer', platforms: :ruby
+gem "actionview", ">= 5.1.6.2"
 
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
@@ -49,7 +50,7 @@ gem 'font-awesome-rails'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
 
-gem 'bootstrap', '~> 4.1.3'
+gem "bootstrap", ">= 4.3.1"
 source 'https://rails-assets.org' do
   gem 'rails-assets-datetimepicker'
 #  gem 'rails-assets-tether', '>= 1.4.0'
