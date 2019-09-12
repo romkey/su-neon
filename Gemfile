@@ -37,7 +37,7 @@ group :production do
   gem 'pg'
 end
 
-gem 'devise'
+gem 'devise', '~> 4.7.1'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-linkedin'
